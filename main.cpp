@@ -304,37 +304,41 @@ float Quiz::calculateScore(const map<int, int>& userAnswers) {
 
 // Main program
 int main() {
-    vector<Account*> users = loadUsers();
-    Quiz quiz = loadQuiz();
+    vector<Account*> users = loadUsers(); 
+    Quiz quiz = loadQuiz();              
     
+ 
     cout << "=== QUIZ EXAMINATION SYSTEM ===\n";
     
-    string u, p;
+    string u, p;  
     cout << "Username: ";
     cin >> u;
     cout << "Password: ";
     cin >> p;
     
-    string role = "";
-    Account* auth = nullptr;
+    string role = "";       
+    Account* auth = nullptr; 
     
+
     for (auto acc : users) {
         if (acc->username == u && acc->password == p) { 
-            auth = acc; 
+            auth = acc;       
             role = acc->role; 
-            break; 
+            break;           
         }
     }
     
     if (role == "") {
         cout << "Login failed! Wrong username or password.\n";
-        return 0;
+        return 0;  // Thoát chương trình
     }
     
     if (role == "Student") {
         Student* s = dynamic_cast<Student*>(auth);
+        
         if (s) {
             QuizResult* r = s->takeQuiz(&quiz);
+            
             cout << "\n=== RESULT ===\n";
             cout << "Your score: " << r->getScore() << "%\n";
         }
@@ -343,10 +347,11 @@ int main() {
         cout << "\n=== ADMIN PANEL ===\n";
         cout << "Hello Admin " << u << "!" << endl;
         cout << "\nList of questions:\n";
+        
         for (Question* q : quiz.questions) {
             cout << "- " << q->questionText << endl;
         }
     }
     
-    return 0;
+    return 0;  
 }
